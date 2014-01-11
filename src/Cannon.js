@@ -31,17 +31,28 @@ var Cannon = function (url) {
     // Our definition of self.
     var self = this;
     
+    // Our projectile data.
+    var projectileBlob;
+    
     // Exported Methods
     // --------------
     
-    // The `Cannon.fire` method is used to activate the Cannon (i.e. make HTTP requests, parse data, etc). The data passed to the callback will be an array of data shaped by string passed to `Cannon.projectile`.
+    // The `Cannon.fire` method is used to activate the Cannon (i.e. make HTTP requests, parse data, etc). The projectiles are passed to the callback as an array of data shaped by string passed to `Cannon.projectile`.
     this.fire = function (callback) {
         self._fetch(callback);
-        return self;
     };
     
-    // The `Cannon.reload` method is used for dealing with paginated content. It takes an object of reloader strings like `{after: "data.after"}` and stores it in the Cannon. After the initial URL provided to the Cannon is loaded, another URL will be loaded which has the added query data `?after={{data.after}}` with the value for `data.after` being pulled from the data for the first page. 
-    this.reload = function (reloaderStrs) {
+    // The `Cannon.rapidfire` is similar to `Cannon.fire` except that instead of having the callback called once with an array containing the data, it is called once for each protectile in the array.
+    this.rapidfire = function (callback) {
+        self._fetch(function (projectiles) {
+            self._each(projectiles, function (projectile) {
+                callback(projectile);
+            });
+        });
+    };
+    
+    // The `Cannon.reloader` method is used for dealing with paginated content. It takes an object of reloader strings like `{after: "data.after"}` and stores it in the Cannon. After the initial URL provided to the Cannon is loaded, another URL will be loaded which has the added query data `?after={{data.after}}` with the value for `data.after` being pulled from the data for the first page. 
+    this.reloader = function (reloaderStrs) {
         self.reloaderStrs = reloaderStrs;
         return self;
     };
@@ -72,7 +83,7 @@ var Cannon = function (url) {
     // Internal Methods
     // --------------
     
-    // The `Cannon._fetch` method is the gunpowder of the Cannon. It handles fetching URLs, reloading, and creating the final `projectileBlob`.
+    // The `Cannon._fetch` method kicks off loading data for the Cannon.
     this._fetch = function (callback, projectileBlob, queryData) { 
         if (self.limitInt && self.fetches++ == self.limitInt) {
             callback(projectileBlob, self);
@@ -81,71 +92,67 @@ var Cannon = function (url) {
         
         queryData = queryData? queryData: {};
         
-        var handle = function (data) {         
-            self.rawData.push(data);
-            var projectilePartial = self._getField([data], self.projectileStr);
-            
-            if (self._isArray(projectilePartial)) {
-                if (!projectileBlob) {
-                    projectileBlob = [];   
-                }
-                for (var p = 0; p<projectilePartial.length; p++) {
-                    projectileBlob.push(projectilePartial[p]);   
-                }
-            }
-            
-            var reloaders = {};
-            var hasReloader = false;
-            
-            for (var reloaderKey in self.reloaderStrs) {
-                var reloader = self.reloaderStrs[reloaderKey];
-                reloaders[reloaderKey] = self._getField([data], self.reloaderStrs[reloaderKey])[0];  
-                hasReloader = reloaders[reloaderKey] || hasReloader;
-            }
-            
-            if (hasReloader) {
-                setTimeout(function () {
-                    self._fetch(callback, projectileBlob, reloaders);
-                }, self.delayInt);
-            }else{
-                callback(projectileBlob, self);
-                return;
-            }
-        };
-        
-        this._getURL(self.url, queryData).then(handle);
+        this._getURL(self.url, queryData, callback).then(this._processIncoming);
     };
     
+    // The `Cannon._processIncoming` processes incoming data by dealing with the `projectilePartial` received from a single HTTP request. 
+    this._processIncoming = function (data, callback) {    
+        self.rawData.push(data);
+        var projectilePartial = self._getField([data], self.projectileStr);
+        
+        if (!projectileBlob) {
+            projectileBlob = [];   
+        }
+        
+        this._each(projectilePartial, function (chunk) {
+            projectileBlob.push(chunk);
+        });     
+        
+        this._reload(data, callback);
+    };
+    
+    // The `Cannon._reload` is called after processing incoming data. If a reload can be done, then `_fetch` will be called again with the reloaded URL.    
+    this._reload = function (data, callback) {
+        var reloaders = {};
+        var hasReloader = false;
+        
+        for (var reloaderKey in self.reloaderStrs) {
+            var reloader = self.reloaderStrs[reloaderKey];
+            reloaders[reloaderKey] = self._getField([data], self.reloaderStrs[reloaderKey])[0];  
+            hasReloader = reloaders[reloaderKey] || hasReloader;
+        }
+        
+        if (hasReloader) {
+            setTimeout(function () {
+                self._fetch(callback, projectileBlob, reloaders);
+            }, self.delayInt);
+        }else{
+            callback(projectileBlob, self);
+            return;
+        }         
+    };
     
     // The `Cannon._getField` method is the method used to parse and fetch data pased on a `projectileStr` (or `fieldStr`). This method takes an array of pools, a field string, and an optional target.
     this._getField = function (pools, fieldsStr, target) {
         var fields = fieldsStr.split('.');
         var targets = [];
+        var newPools = [];
+        
+        var addToPool = function (item, pool, child) {
+            newPools.push(item);
+            if (item == target) {
+                targets.push(pool);
+            }
+        };
         
         for (var f=0; f<fields.length; f++) {
             var field = fields[f];
-            var newPools = [];
+            newPools = [];
             
             for (var p=0; p<pools.length; p++) {
                 var pool = pools[p];
                 if (field == "*") {
-                    var child;
-                    if (self._isArray(pools)) {
-                        for (child=0; child<pool.length; child++) {
-                            newPools.push(pool[child]);
-                            if (pool[child] == target) {
-                                targets.push(pool);
-                            }
-                        }
-                    }
-                    else {
-                        for (child in pool) {
-                            newPools.push(pool[child]);
-                            if (pool[child] == target) {
-                                targets.push(pool);
-                            }
-                        }
-                    }
+                    self._each(pool, addToPool);
                 }
                 else if (pool[field]) {
                     newPools.push(pool[field]);
@@ -164,9 +171,24 @@ var Cannon = function (url) {
         }
     };
     
+    // The `Cannon._each` is a utility method for looping through arrays or objects. 
+    this._each = function (obj, func) {
+        var child;
+        if (self._isArray(obj)) {
+            for (child=0; child<obj.length; child++) {
+                func(obj[child], obj, child);
+            }
+        }
+        else {
+            for (child in obj) {
+                func(obj[child], obj, child);
+            }
+        }       
+    };
+    
     
     // The `Cannon._getURL` method is our XHR wrapper used for requesting data.
-    this._getURL = function (src, data) {
+    this._getURL = function (src, data, userdata) {
         var deferred = self._defer();
         var queryPairs = [];
         var queryString = "";
@@ -180,7 +202,7 @@ var Cannon = function (url) {
         }
         
         function reqListener (res) {
-            deferred.resolve(JSON.parse(res.responseText || res.currentTarget.responseText));
+            deferred.resolve(JSON.parse(res.responseText || res.currentTarget.responseText), userdata   );
         }
         
         var xhr = new XMLHttpRequest();

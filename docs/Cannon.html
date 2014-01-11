@@ -176,9 +176,11 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <h2 id="exported-methods">Exported Methods</h2>
+              <p>Our projectile data.</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> projectileBlob;</pre></div></div>
             
         </li>
         
@@ -189,7 +191,8 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              
+              <h2 id="exported-methods">Exported Methods</h2>
+
             </div>
             
         </li>
@@ -201,14 +204,8 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>The <code>Cannon.fire</code> method is used to activate the Cannon (i.e. make HTTP requests, parse data, etc). The data passed to the callback will be an array of data shaped by string passed to <code>Cannon.projectile</code>.</p>
-
+              
             </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.fire = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> {</span>
-        self._fetch(callback);
-        <span class="hljs-keyword">return</span> self;
-    };</pre></div></div>
             
         </li>
         
@@ -219,13 +216,12 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p>The <code>Cannon.reload</code> method is used for dealing with paginated content. It takes an object of reloader strings like <code>{after: &quot;data.after&quot;}</code> and stores it in the Cannon. After the initial URL provided to the Cannon is loaded, another URL will be loaded which has the added query data <code>?after={{data.after}}</code> with the value for <code>data.after</code> being pulled from the data for the first page. </p>
+              <p>The <code>Cannon.fire</code> method is used to activate the Cannon (i.e. make HTTP requests, parse data, etc). The projectiles are passed to the callback as an array of data shaped by string passed to <code>Cannon.projectile</code>.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.reload = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(reloaderStrs)</span> {</span>
-        self.reloaderStrs = reloaderStrs;
-        <span class="hljs-keyword">return</span> self;
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.fire = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> {</span>
+        self._fetch(callback);
     };</pre></div></div>
             
         </li>
@@ -236,6 +232,45 @@ Cannon may be freely distributed under the MIT license.
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>The <code>Cannon.rapidfire</code> is similar to <code>Cannon.fire</code> except that instead of having the callback called once with an array containing the data, it is called once for each protectile in the array.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.rapidfire = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> {</span>
+        self._fetch(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(projectiles)</span> {</span>
+            self._each(projectiles, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(projectile)</span> {</span>
+                callback(projectile);
+            });
+        });
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>The <code>Cannon.reloader</code> method is used for dealing with paginated content. It takes an object of reloader strings like <code>{after: &quot;data.after&quot;}</code> and stores it in the Cannon. After the initial URL provided to the Cannon is loaded, another URL will be loaded which has the added query data <code>?after={{data.after}}</code> with the value for <code>data.after</code> being pulled from the data for the first page. </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.reloader = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(reloaderStrs)</span> {</span>
+        self.reloaderStrs = reloaderStrs;
+        <span class="hljs-keyword">return</span> self;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>The <code>Cannon.limit</code> method is used for limiting the number of HTTP requests when a reloader is used. Theoredically, a reloader could be used to load an infinite amount of pages, which may not be what we want. The <code>limit</code> method takes a number and will not let the total page requests from this Cannon exceed that number.</p>
 
@@ -249,11 +284,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-16">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>The <code>Cannon.delay</code> method is used for adding a delay between HTTP requests when a reloader is used. This method takes a number of millseconds and delays each HTTP request by that amount of time.</p>
 
@@ -267,11 +302,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-17">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>The <code>Cannon.projectile</code> method is used for defining the shape of the data passed to <code>Cannon.fire</code>&#39;s callback. An example <code>projectileStr</code> would be <code>&quot;data.children.*.data.title&quot;</code>. This tells the Cannon to fire the data in <code>dataFromURL[&#39;data&#39;][&#39;children&#39;][*][&#39;data&#39;][&#39;title&#39;]</code>. This syntax should be familiar to any developer with the exception of the special <code>*</code> field. This character is the single most important concept when building a Cannon. It acts as a wild card and allows us to get a list of titles from all the children, not just a specific one.</p>
 
@@ -285,11 +320,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-18">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>The <code>Cannon.recoil</code> method is typically used from within the <code>Cannon.fire</code> callback. This method will take a single projectile and return the parent(s) of that projectile. For example, if we have our projectile set as <code>&quot;data.children.*.data.title&quot;</code>, then our projectile will be the value of <code>title</code>. In order to access the complete child&#39;s data, we can <code>Cannon.recoil</code> the <code>title</code> and we will receive the <code>data</code> object which has the <code>title</code> field. It is important to note that <em>this method returns a list of matches, not a single match</em> due to the fact that there is no guarantee that the projectile provided will be unique.</p>
 
@@ -302,11 +337,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-19">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <h2 id="internal-methods">Internal Methods</h2>
 
@@ -315,11 +350,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-20">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               
             </div>
@@ -327,13 +362,13 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-21">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
-              <p>The <code>Cannon._fetch</code> method is the gunpowder of the Cannon. It handles fetching URLs, reloading, and creating the final <code>projectileBlob</code>.</p>
+              <p>The <code>Cannon._fetch</code> method kicks off loading data for the Cannon.</p>
 
             </div>
             
@@ -345,49 +380,78 @@ Cannon may be freely distributed under the MIT license.
         
         queryData = queryData? queryData: {};
         
-        <span class="hljs-keyword">var</span> handle = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> {</span>         
-            self.rawData.push(data);
-            <span class="hljs-keyword">var</span> projectilePartial = self._getField([data], self.projectileStr);
-            
-            <span class="hljs-keyword">if</span> (self._isArray(projectilePartial)) {
-                <span class="hljs-keyword">if</span> (!projectileBlob) {
-                    projectileBlob = [];   
-                }
-                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> p = <span class="hljs-number">0</span>; p&lt;projectilePartial.length; p++) {
-                    projectileBlob.push(projectilePartial[p]);   
-                }
-            }
-            
-            <span class="hljs-keyword">var</span> reloaders = {};
-            <span class="hljs-keyword">var</span> hasReloader = <span class="hljs-literal">false</span>;
-            
-            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> reloaderKey <span class="hljs-keyword">in</span> self.reloaderStrs) {
-                <span class="hljs-keyword">var</span> reloader = self.reloaderStrs[reloaderKey];
-                reloaders[reloaderKey] = self._getField([data], self.reloaderStrs[reloaderKey])[<span class="hljs-number">0</span>];  
-                hasReloader = reloaders[reloaderKey] || hasReloader;
-            }
-            
-            <span class="hljs-keyword">if</span> (hasReloader) {
-                setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
-                    self._fetch(callback, projectileBlob, reloaders);
-                }, self.delayInt);
-            }<span class="hljs-keyword">else</span>{
-                callback(projectileBlob, self);
-                <span class="hljs-keyword">return</span>;
-            }
-        };
-        
-        <span class="hljs-keyword">this</span>._getURL(self.url, queryData).then(handle);
+        <span class="hljs-keyword">this</span>._getURL(self.url, queryData, callback).then(<span class="hljs-keyword">this</span>._processIncoming);
     };</pre></div></div>
             
         </li>
         
         
-        <li id="section-22">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>The <code>Cannon._processIncoming</code> processes incoming data by dealing with the <code>projectilePartial</code> received from a single HTTP request. </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>._processIncoming = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data, callback)</span> {</span>    
+        self.rawData.push(data);
+        <span class="hljs-keyword">var</span> projectilePartial = self._getField([data], self.projectileStr);
+        
+        <span class="hljs-keyword">if</span> (!projectileBlob) {
+            projectileBlob = [];   
+        }
+        
+        <span class="hljs-keyword">this</span>._each(projectilePartial, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(chunk)</span> {</span>
+            projectileBlob.push(chunk);
+        });     
+        
+        <span class="hljs-keyword">this</span>._reload(data, callback);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>The <code>Cannon._reload</code> is called after processing incoming data. If a reload can be done, then <code>_fetch</code> will be called again with the reloaded URL.    </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>._reload = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data, callback)</span> {</span>
+        <span class="hljs-keyword">var</span> reloaders = {};
+        <span class="hljs-keyword">var</span> hasReloader = <span class="hljs-literal">false</span>;
+        
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> reloaderKey <span class="hljs-keyword">in</span> self.reloaderStrs) {
+            <span class="hljs-keyword">var</span> reloader = self.reloaderStrs[reloaderKey];
+            reloaders[reloaderKey] = self._getField([data], self.reloaderStrs[reloaderKey])[<span class="hljs-number">0</span>];  
+            hasReloader = reloaders[reloaderKey] || hasReloader;
+        }
+        
+        <span class="hljs-keyword">if</span> (hasReloader) {
+            setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                self._fetch(callback, projectileBlob, reloaders);
+            }, self.delayInt);
+        }<span class="hljs-keyword">else</span>{
+            callback(projectileBlob, self);
+            <span class="hljs-keyword">return</span>;
+        }         
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>The <code>Cannon._getField</code> method is the method used to parse and fetch data pased on a <code>projectileStr</code> (or <code>fieldStr</code>). This method takes an array of pools, a field string, and an optional target.</p>
 
@@ -396,31 +460,23 @@ Cannon may be freely distributed under the MIT license.
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>._getField = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(pools, fieldsStr, target)</span> {</span>
         <span class="hljs-keyword">var</span> fields = fieldsStr.split(<span class="hljs-string">'.'</span>);
         <span class="hljs-keyword">var</span> targets = [];
+        <span class="hljs-keyword">var</span> newPools = [];
+        
+        <span class="hljs-keyword">var</span> addToPool = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(item, pool, child)</span> {</span>
+            newPools.push(item);
+            <span class="hljs-keyword">if</span> (item == target) {
+                targets.push(pool);
+            }
+        };
         
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> f=<span class="hljs-number">0</span>; f&lt;fields.length; f++) {
             <span class="hljs-keyword">var</span> field = fields[f];
-            <span class="hljs-keyword">var</span> newPools = [];
+            newPools = [];
             
             <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> p=<span class="hljs-number">0</span>; p&lt;pools.length; p++) {
                 <span class="hljs-keyword">var</span> pool = pools[p];
                 <span class="hljs-keyword">if</span> (field == <span class="hljs-string">"*"</span>) {
-                    <span class="hljs-keyword">var</span> child;
-                    <span class="hljs-keyword">if</span> (self._isArray(pools)) {
-                        <span class="hljs-keyword">for</span> (child=<span class="hljs-number">0</span>; child&lt;pool.length; child++) {
-                            newPools.push(pool[child]);
-                            <span class="hljs-keyword">if</span> (pool[child] == target) {
-                                targets.push(pool);
-                            }
-                        }
-                    }
-                    <span class="hljs-keyword">else</span> {
-                        <span class="hljs-keyword">for</span> (child <span class="hljs-keyword">in</span> pool) {
-                            newPools.push(pool[child]);
-                            <span class="hljs-keyword">if</span> (pool[child] == target) {
-                                targets.push(pool);
-                            }
-                        }
-                    }
+                    self._each(pool, addToPool);
                 }
                 <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (pool[field]) {
                     newPools.push(pool[field]);
@@ -442,17 +498,44 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-23">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>The <code>Cannon._each</code> is a utility method for looping through arrays or objects. </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>._each = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj, func)</span> {</span>
+        <span class="hljs-keyword">var</span> child;
+        <span class="hljs-keyword">if</span> (self._isArray(obj)) {
+            <span class="hljs-keyword">for</span> (child=<span class="hljs-number">0</span>; child&lt;obj.length; child++) {
+                func(obj[child], obj, child);
+            }
+        }
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">for</span> (child <span class="hljs-keyword">in</span> obj) {
+                func(obj[child], obj, child);
+            }
+        }       
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>The <code>Cannon._getURL</code> method is our XHR wrapper used for requesting data.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>._getURL = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src, data)</span> {</span>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>._getURL = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(src, data, userdata)</span> {</span>
         <span class="hljs-keyword">var</span> deferred = self._defer();
         <span class="hljs-keyword">var</span> queryPairs = [];
         <span class="hljs-keyword">var</span> queryString = <span class="hljs-string">""</span>;
@@ -466,7 +549,7 @@ Cannon may be freely distributed under the MIT license.
         }
         
         <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reqListener</span> <span class="hljs-params">(res)</span> {</span>
-            deferred.resolve(<span class="hljs-built_in">JSON</span>.parse(res.responseText || res.currentTarget.responseText));
+            deferred.resolve(<span class="hljs-built_in">JSON</span>.parse(res.responseText || res.currentTarget.responseText), userdata   );
         }
         
         <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();
@@ -480,11 +563,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-24">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>The <code>Cannon._defer</code> is a minimalist promise implemtation used in <code>Cannon._getURL</code>.</p>
 

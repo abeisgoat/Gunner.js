@@ -1,11 +1,4 @@
-(new Cannon("http://api.reddit.com/user/abeisgreat/comments.json")).projectile("data.children.*.data.subreddit").delay(100).fire(function (projectile, cannon) {
-    console.log("Caught projectile");
-    
-    console.log(projectile);
-    
-    var posts = cannon.recoil("PixelArt");
-    for (var postIndex in posts) {
-        var post = posts[postIndex];
-        console.log(post.body);
-    }
+(new Cannon("http://www.reddit.com/r/AbandonedPorn/.json")).projectile("data.children.*.data.url").reloader({after: "data.after"}).limit(3).rapidfire(function (projectile, cannon) {
+    var pictures = document.getElementById("pictures");
+    pictures.innerHTML += "<img src='" + projectile + "' width='400'/>"
 });
