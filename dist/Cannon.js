@@ -63,6 +63,12 @@ var Cannon = function (url) {
         return self;
     };
     
+    // The `Cannon.fetcher` adds a callback to be called as pages are being fetched. The `fetcherFunc` will be passed the current number of HTTP requests and the limit (if any).
+    this.fetcher = function (fetcherFunc) {
+        self.fetcherFunc = fetcherFunc;
+        return self;
+    };
+    
     // The `Cannon.delay` method is used for adding a delay between HTTP requests when a reloader is used. This method takes a number of millseconds and delays each HTTP request by that amount of time.
     this.delay = function (delayInt) {
         self.delayInt = delayInt;
@@ -88,6 +94,8 @@ var Cannon = function (url) {
         if (self.limitInt && self.fetches++ == self.limitInt) {
             callback(projectileBlob, self);
             return;
+        }else if (self.fetcherFunc) {
+            self.fetcherFunc(self.fetches, self.limitInt);  
         }
         
         queryData = queryData? queryData: {};
@@ -185,7 +193,6 @@ var Cannon = function (url) {
             }
         }       
     };
-    
     
     // The `Cannon._getURL` method is our XHR wrapper used for requesting data.
     this._getURL = function (src, data, userdata) {

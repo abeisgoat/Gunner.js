@@ -290,6 +290,24 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
+              <p>The <code>Cannon.fetcher</code> adds a callback to be called as pages are being fetched. The <code>fetcherFunc</code> will be passed the current number of HTTP requests and the limit (if any).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.fetcher = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fetcherFunc)</span> {</span>
+        self.fetcherFunc = fetcherFunc;
+        <span class="hljs-keyword">return</span> self;
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
               <p>The <code>Cannon.delay</code> method is used for adding a delay between HTTP requests when a reloader is used. This method takes a number of millseconds and delays each HTTP request by that amount of time.</p>
 
             </div>
@@ -302,11 +320,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-19">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>The <code>Cannon.projectile</code> method is used for defining the shape of the data passed to <code>Cannon.fire</code>&#39;s callback. An example <code>projectileStr</code> would be <code>&quot;data.children.*.data.title&quot;</code>. This tells the Cannon to fire the data in <code>dataFromURL[&#39;data&#39;][&#39;children&#39;][*][&#39;data&#39;][&#39;title&#39;]</code>. This syntax should be familiar to any developer with the exception of the special <code>*</code> field. This character is the single most important concept when building a Cannon. It acts as a wild card and allows us to get a list of titles from all the children, not just a specific one.</p>
 
@@ -320,11 +338,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-20">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>The <code>Cannon.recoil</code> method is typically used from within the <code>Cannon.fire</code> callback. This method will take a single projectile and return the parent(s) of that projectile. For example, if we have our projectile set as <code>&quot;data.children.*.data.title&quot;</code>, then our projectile will be the value of <code>title</code>. In order to access the complete child&#39;s data, we can <code>Cannon.recoil</code> the <code>title</code> and we will receive the <code>data</code> object which has the <code>title</code> field. It is important to note that <em>this method returns a list of matches, not a single match</em> due to the fact that there is no guarantee that the projectile provided will be unique.</p>
 
@@ -337,26 +355,14 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-21">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
-              </div>
-              <h2 id="internal-methods">Internal Methods</h2>
-
-            </div>
-            
-        </li>
-        
-        
         <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
-              
+              <h2 id="internal-methods">Internal Methods</h2>
+
             </div>
             
         </li>
@@ -368,6 +374,18 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
               <p>The <code>Cannon._fetch</code> method kicks off loading data for the Cannon.</p>
 
             </div>
@@ -376,6 +394,8 @@ Cannon may be freely distributed under the MIT license.
         <span class="hljs-keyword">if</span> (self.limitInt &amp;&amp; self.fetches++ == self.limitInt) {
             callback(projectileBlob, self);
             <span class="hljs-keyword">return</span>;
+        }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (self.fetcherFunc) {
+            self.fetcherFunc(self.fetches, self.limitInt);  
         }
         
         queryData = queryData? queryData: {};
@@ -386,11 +406,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-24">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>The <code>Cannon._processIncoming</code> processes incoming data by dealing with the <code>projectilePartial</code> received from a single HTTP request. </p>
 
@@ -414,11 +434,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-25">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>The <code>Cannon._reload</code> is called after processing incoming data. If a reload can be done, then <code>_fetch</code> will be called again with the reloaded URL.    </p>
 
@@ -447,11 +467,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-26">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>The <code>Cannon._getField</code> method is the method used to parse and fetch data pased on a <code>projectileStr</code> (or <code>fieldStr</code>). This method takes an array of pools, a field string, and an optional target.</p>
 
@@ -498,11 +518,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-27">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>The <code>Cannon._each</code> is a utility method for looping through arrays or objects. </p>
 
@@ -525,11 +545,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-28">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>The <code>Cannon._getURL</code> method is our XHR wrapper used for requesting data.</p>
 
@@ -563,11 +583,11 @@ Cannon may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-29">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>The <code>Cannon._defer</code> is a minimalist promise implemtation used in <code>Cannon._getURL</code>.</p>
 
