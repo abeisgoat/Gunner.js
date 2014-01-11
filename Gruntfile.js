@@ -46,7 +46,7 @@ module.exports = function (grunt) {
         notify_hooks: {
             options: {
               enabled: true,
-              max_jshint_notifications: 5, // maximum number of notifications from jshint output
+              max_jshint_notifications: 1, // maximum number of notifications from jshint output
               title: "CannonJS" // defaults to the name in package.json, or will use project directory's name
             }
         }
