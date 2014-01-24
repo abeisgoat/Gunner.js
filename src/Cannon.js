@@ -5,22 +5,32 @@
 // Our main Cannon class which takes the URL of the data we are looking to retreive and manipulate.
 
 // For example `new Cannon("http://api.reddit.com/user/unidan/")`
-var Cannon = function (url) {
+var Cannon = function (resource) {
     
     // Initial setup
     // --------------
     
-    // The URL this Cannon loads data from.
-    this.url = url;
+    // Cannon takes a "resource" which is either a URL or an Object.
+    if (typeof resource == "string") {
+        this.url = resource;
+    }else{
+        this.url = false;   
+    }
+    
+    if (typeof resource == "object") {
+        this.initialData = resource;   
+    }else{
+        this.initialData = false;   
+    }
     
     // The object containing reloader information
     this.reloaderStrs = {};
     
-    // The default projectile is `"*"` i.e. all children of data
-    this.projectileStr = "*";
-    
     // All data loaded from URL and reloads, used for `Cannon.recoil`
     this.rawData = [];
+    
+    // The default projectile is `"*"` i.e. all children of data
+    this.projectileStr = "*";
     
     // The total HTTP requests made, used for `Cannon.limit`
     this.fetches = 0;
@@ -100,7 +110,11 @@ var Cannon = function (url) {
         
         queryData = queryData? queryData: {};
         
-        this._getURL(self.url, queryData, callback).then(this._processIncoming);
+        if (self.url) {
+            self._getURL(self.url, queryData, callback).then(self._processIncoming);
+        }else{
+            self._processIncoming(self.initialData, callback);
+        }
     };
     
     // The `Cannon._processIncoming` processes incoming data by dealing with the `projectilePartial` received from a single HTTP request. 
@@ -130,7 +144,7 @@ var Cannon = function (url) {
             hasReloader = reloaders[reloaderKey] || hasReloader;
         }
         
-        if (hasReloader) {
+        if (hasReloader && self.url) {
             setTimeout(function () {
                 self._fetch(callback, projectileBlob, reloaders);
             }, self.delayInt);

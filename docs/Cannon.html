@@ -35,7 +35,7 @@ Cannon may be freely distributed under the MIT license.
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Cannon = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(url)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Cannon = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(resource)</span> {</span></pre></div></div>
             
         </li>
         
@@ -75,7 +75,16 @@ Cannon may be freely distributed under the MIT license.
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.url = url;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> resource == <span class="hljs-string">"string"</span>) {
+        <span class="hljs-keyword">this</span>.url = resource;
+    }<span class="hljs-keyword">else</span>{
+        <span class="hljs-keyword">this</span>.url = <span class="hljs-literal">false</span>;   
+    }
+    
+    
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> resource == <span class="hljs-string">"object"</span>) {
+        <span class="hljs-keyword">this</span>.initialData = resource;   
+    }</pre></div></div>
             
         </li>
         
@@ -101,11 +110,11 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>The default projectile is <code>&quot;*&quot;</code> i.e. all children of data</p>
+              <p>All data loaded from URL and reloads, used for <code>Cannon.recoil</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.projectileStr = <span class="hljs-string">"*"</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.rawData = [];</pre></div></div>
             
         </li>
         
@@ -116,11 +125,11 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>All data loaded from URL and reloads, used for <code>Cannon.recoil</code></p>
+              <p>The default projectile is <code>&quot;*&quot;</code> i.e. all children of data</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.rawData = [];</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.projectileStr = <span class="hljs-string">"*"</span>;</pre></div></div>
             
         </li>
         
@@ -400,7 +409,11 @@ Cannon may be freely distributed under the MIT license.
         
         queryData = queryData? queryData: {};
         
-        <span class="hljs-keyword">this</span>._getURL(self.url, queryData, callback).then(<span class="hljs-keyword">this</span>._processIncoming);
+        <span class="hljs-keyword">if</span> (self.url) {
+            self._getURL(self.url, queryData, callback).then(self._processIncoming);
+        }<span class="hljs-keyword">else</span>{
+            self._processIncoming(self.initialData, callback);
+        }
     };</pre></div></div>
             
         </li>
@@ -454,7 +467,7 @@ Cannon may be freely distributed under the MIT license.
             hasReloader = reloaders[reloaderKey] || hasReloader;
         }
         
-        <span class="hljs-keyword">if</span> (hasReloader) {
+        <span class="hljs-keyword">if</span> (hasReloader &amp;&amp; self.url) {
             setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
                 self._fetch(callback, projectileBlob, reloaders);
             }, self.delayInt);
