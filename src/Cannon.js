@@ -35,6 +35,9 @@ var Cannon = function (resource) {
     // The total HTTP requests made, used for `Cannon.limit`
     this.fetches = 0;
     
+    // The total HTTP requests we can make, used for `Cannon.limit`
+    this.limitInt = 1;
+    
     // The delay (in milliseconds) between each HTTP request, used for `Cannon.delay`
     this.delayInt = 0;
     
