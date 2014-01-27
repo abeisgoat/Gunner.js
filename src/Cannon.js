@@ -138,11 +138,11 @@ var Cannon = function (resource) {
             projectileBlob.push(chunk);
         });     
         
-        this._reload(data, callback);
+        this._reload(data, projectileBlob, callback);
     };
     
     // The `Cannon._reload` is called after processing incoming data. If a reload can be done, then `_fetch` will be called again with the reloaded URL.    
-    this._reload = function (data, callback) {
+    this._reload = function (data, blob, callback) {
         var reloaders = {};
         var hasReloader = false;
         
@@ -154,10 +154,10 @@ var Cannon = function (resource) {
         
         if (hasReloader && self.url) {
             setTimeout(function () {
-                self._fetch(callback, projectileBlob, reloaders);
+                self._fetch(callback, blob, reloaders);
             }, self.delayInt);
         }else{
-            callback(projectileBlob, self);
+            callback(blob, self);
             return;
         }         
     };
