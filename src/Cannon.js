@@ -127,6 +127,8 @@ var Cannon = function (resource) {
     
     // The `Cannon._processIncoming` processes incoming data by dealing with the `projectilePartial` received from a single HTTP request. 
     this._processIncoming = function (data, callback) {    
+        var deffered = self._defer();
+        
         self.rawData.push(data);
         var projectilePartial = self._getField([data], self.projectileStr);
         
@@ -134,11 +136,12 @@ var Cannon = function (resource) {
             projectileBlob = [];   
         }
         
-        this._each(projectilePartial, function (chunk) {
+        var partials = projectilePartial.length;
+        self._each(projectilePartial, function (chunk) {
             projectileBlob.push(chunk);
         });     
         
-        this._reload(data, projectileBlob, callback);
+        self._reload(data, projectileBlob, callback);
     };
     
     // The `Cannon._reload` is called after processing incoming data. If a reload can be done, then `_fetch` will be called again with the reloaded URL.    
