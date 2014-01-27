@@ -101,6 +101,7 @@ var Cannon = function (resource) {
     
     this.getter = function (getterFunc) {
         self._getterFunc = getterFunc;  
+        return self;
     };
     
     // Internal Methods
