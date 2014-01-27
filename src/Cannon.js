@@ -99,6 +99,10 @@ var Cannon = function (resource) {
         return self._getField(self.rawData, self.projectileStr, projectile);
     };
     
+    this.getter = function (getterFunc) {
+        self._getterFunc = getterFunc;  
+    };
+    
     // Internal Methods
     // --------------
     
@@ -114,7 +118,7 @@ var Cannon = function (resource) {
         queryData = queryData? queryData: {};
         
         if (self.url) {
-            self._getURL(self.url, queryData, callback).then(self._processIncoming);
+            self._getterFunc(self.url, queryData, callback).then(self._processIncoming);
         }else{
             self._processIncoming(self.initialData, callback);
         }
@@ -211,8 +215,8 @@ var Cannon = function (resource) {
         }       
     };
     
-    // The `Cannon._getURL` method is our XHR wrapper used for requesting data.
-    this._getURL = function (src, data, userdata) {
+    // The default `Cannon._getterFunc` method is used for requesting data via XHR.
+    this._getURL =  function (src, data, userdata) {
         var deferred = self._defer();
         var queryPairs = [];
         var queryString = "";
@@ -236,6 +240,8 @@ var Cannon = function (resource) {
         
         return deferred.promise;
     };
+    
+    this._getterFunc = this._getURL;
     
     // The `Cannon._defer` is a minimalist promise implemtation used in `Cannon._getURL`.
     this._defer = function () {
