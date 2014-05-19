@@ -1,8 +1,8 @@
 {
-  "name": "Cannon",
-  "version": "0.0.0",
+  "name": "cannon",
+  "version": "0.1.0",
   "description": "Cannon",
-  "main": "cannon.js",
+  "main": "dist/Cannon.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
