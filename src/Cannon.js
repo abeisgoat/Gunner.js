@@ -223,8 +223,8 @@
 
         // The default `Cannon._getterFunc` method is used for requesting data via XHR.
         this._getURL =  function (src, data, userdata) {
+            var deferred = self._defer();
             if (!isNode) {
-                var deferred = self._defer();
                 var queryPairs = [];
                 var queryString = "";
 
@@ -238,7 +238,7 @@
 
                 var reqListener = function (res) {
                     deferred.resolve(JSON.parse(res.responseText || res.currentTarget.responseText), userdata);
-                }
+                };
 
                 var xhr = new XMLHttpRequest();
                 xhr.onload = reqListener;
@@ -247,7 +247,6 @@
 
                 return deferred.promise;
             }else{
-                var deferred = self._defer();
                 // This is why Node is better...
                 request.get(src + "?" + qs.stringify(data), function (err, resp, body) {
                     deferred.resolve(JSON.parse(body), userdata);
