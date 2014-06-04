@@ -42,9 +42,9 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <pre><code>Cannon.js <span class="hljs-number">0.0</span><span class="hljs-number">.1</span>
+              <pre><code>Gunner.js <span class="hljs-number">0.0</span><span class="hljs-number">.1</span>
 (c) <span class="hljs-number">2014</span> Abraham Haskins
-Cannon may be freely distributed under the MIT license.
+Gunner may be freely distributed under the MIT license.
 </code></pre>
             </div>
             
@@ -57,7 +57,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Our main Cannon class which takes the URL of the data we are looking to retreive and manipulate.</p>
+              <p>Our main Gunner class which takes the URL of the data we are looking to retreive and manipulate.</p>
 
             </div>
             
@@ -70,11 +70,11 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>For example <code>new Cannon(&quot;http://api.reddit.com/user/unidan/&quot;)</code></p>
+              <p>For example <code>new Gunner(&quot;http://api.reddit.com/user/unidan/&quot;)</code></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> Cannon = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(resource)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> Gunner = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(resource)</span> {</span></pre></div></div>
             
         </li>
         
@@ -110,7 +110,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>Cannon takes a “resource” which is either a URL or an Object.</p>
+              <p>Gunner takes a “resource” which is either a URL or an Object.</p>
 
             </div>
             
@@ -150,7 +150,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>All data loaded from URL and reloads, used for <code>Cannon.recoil</code></p>
+              <p>All data loaded from URL and reloads, used for <code>Gunner.recoil</code></p>
 
             </div>
             
@@ -180,7 +180,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>The total HTTP requests made, used for <code>Cannon.limit</code></p>
+              <p>The total HTTP requests made, used for <code>Gunner.limit</code></p>
 
             </div>
             
@@ -195,7 +195,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <p>The total HTTP requests we can make, used for <code>Cannon.limit</code></p>
+              <p>The total HTTP requests we can make, used for <code>Gunner.limit</code></p>
 
             </div>
             
@@ -210,7 +210,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>The delay (in milliseconds) between each HTTP request, used for <code>Cannon.delay</code></p>
+              <p>The delay (in milliseconds) between each HTTP request, used for <code>Gunner.delay</code></p>
 
             </div>
             
@@ -280,7 +280,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
-              <p>The <code>Cannon.fire</code> method is used to activate the Cannon (i.e. make HTTP requests, parse data, etc). The projectiles are passed to the callback as an array of data shaped by string passed to <code>Cannon.projectile</code>.</p>
+              <p>The <code>Gunner.fire</code> method is used to activate the Gunner (i.e. make HTTP requests, parse data, etc). The projectiles are passed to the callback as an array of data shaped by string passed to <code>Gunner.projectile</code>.</p>
 
             </div>
             
@@ -297,7 +297,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
-              <p>The <code>Cannon.rapidfire</code> is similar to <code>Cannon.fire</code> except that instead of having the callback called once with an array containing the data, it is called once for each protectile in the array.</p>
+              <p>The <code>Gunner.rapidfire</code> is similar to <code>Gunner.fire</code> except that instead of having the callback called once with an array containing the data, it is called once for each protectile in the array.</p>
 
             </div>
             
@@ -318,7 +318,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
-              <p>The <code>Cannon.reloader</code> method is used for dealing with paginated content. It takes an object of reloader strings like <code>{after: &quot;data.after&quot;}</code> and stores it in the Cannon. After the initial URL provided to the Cannon is loaded, another URL will be loaded which has the added query data <code>?after={{data.after}}</code> with the value for <code>data.after</code> being pulled from the data for the first page. </p>
+              <p>The <code>Gunner.reloader</code> method is used for dealing with paginated content. It takes an object of reloader strings like <code>{after: &quot;data.after&quot;}</code> and stores it in the Gunner. After the initial URL provided to the Gunner is loaded, another URL will be loaded which has the added query data <code>?after={{data.after}}</code> with the value for <code>data.after</code> being pulled from the data for the first page. </p>
 
             </div>
             
@@ -336,7 +336,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
-              <p>The <code>Cannon.limit</code> method is used for limiting the number of HTTP requests when a reloader is used. Theoredically, a reloader could be used to load an infinite amount of pages, which may not be what we want. The <code>limit</code> method takes a number and will not let the total page requests from this Cannon exceed that number.</p>
+              <p>The <code>Gunner.limit</code> method is used for limiting the number of HTTP requests when a reloader is used. Theoredically, a reloader could be used to load an infinite amount of pages, which may not be what we want. The <code>limit</code> method takes a number and will not let the total page requests from this Gunner exceed that number.</p>
 
             </div>
             
@@ -354,7 +354,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
-              <p>The <code>Cannon.fetcher</code> adds a callback to be called as pages are being fetched. The <code>fetcherFunc</code> will be passed the current number of HTTP requests and the limit (if any).</p>
+              <p>The <code>Gunner.fetcher</code> adds a callback to be called as pages are being fetched. The <code>fetcherFunc</code> will be passed the current number of HTTP requests and the limit (if any).</p>
 
             </div>
             
@@ -372,7 +372,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
-              <p>The <code>Cannon.delay</code> method is used for adding a delay between HTTP requests when a reloader is used. This method takes a number of millseconds and delays each HTTP request by that amount of time.</p>
+              <p>The <code>Gunner.delay</code> method is used for adding a delay between HTTP requests when a reloader is used. This method takes a number of millseconds and delays each HTTP request by that amount of time.</p>
 
             </div>
             
@@ -390,7 +390,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
-              <p>The <code>Cannon.projectile</code> method is used for defining the shape of the data passed to <code>Cannon.fire</code>‘s callback. An example <code>projectileStr</code> would be <code>&quot;data.children.*.data.title&quot;</code>. This tells the Cannon to fire the data in <code>dataFromURL[&#39;data&#39;][&#39;children&#39;][*][&#39;data&#39;][&#39;title&#39;]</code>. This syntax should be familiar to any developer with the exception of the special <code>*</code> field. This character is the single most important concept when building a Cannon. It acts as a wild card and allows us to get a list of titles from all the children, not just a specific one.</p>
+              <p>The <code>Gunner.projectile</code> method is used for defining the shape of the data passed to <code>Gunner.fire</code>‘s callback. An example <code>projectileStr</code> would be <code>&quot;data.children.*.data.title&quot;</code>. This tells the Gunner to fire the data in <code>dataFromURL[&#39;data&#39;][&#39;children&#39;][*][&#39;data&#39;][&#39;title&#39;]</code>. This syntax should be familiar to any developer with the exception of the special <code>*</code> field. This character is the single most important concept when building a Gunner. It acts as a wild card and allows us to get a list of titles from all the children, not just a specific one.</p>
 
             </div>
             
@@ -408,7 +408,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
-              <p>The <code>Cannon.recoil</code> method is typically used from within the <code>Cannon.fire</code> callback. This method will take a single projectile and return the parent(s) of that projectile. For example, if we have our projectile set as <code>&quot;data.children.*.data.title&quot;</code>, then our projectile will be the value of <code>title</code>. In order to access the complete child’s data, we can <code>Cannon.recoil</code> the <code>title</code> and we will receive the <code>data</code> object which has the <code>title</code> field. It is important to note that <em>this method returns a list of matches, not a single match</em> due to the fact that there is no guarantee that the projectile provided will be unique.</p>
+              <p>The <code>Gunner.recoil</code> method is typically used from within the <code>Gunner.fire</code> callback. This method will take a single projectile and return the parent(s) of that projectile. For example, if we have our projectile set as <code>&quot;data.children.*.data.title&quot;</code>, then our projectile will be the value of <code>title</code>. In order to access the complete child’s data, we can <code>Gunner.recoil</code> the <code>title</code> and we will receive the <code>data</code> object which has the <code>title</code> field. It is important to note that <em>this method returns a list of matches, not a single match</em> due to the fact that there is no guarantee that the projectile provided will be unique.</p>
 
             </div>
             
@@ -455,7 +455,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
-              <p>The <code>Cannon._fetch</code> method kicks off loading data for the Cannon.</p>
+              <p>The <code>Gunner._fetch</code> method kicks off loading data for the Gunner.</p>
 
             </div>
             
@@ -485,7 +485,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
-              <p>The <code>Cannon._processIncoming</code> processes incoming data by dealing with the <code>projectilePartial</code> received from a single HTTP request. </p>
+              <p>The <code>Gunner._processIncoming</code> processes incoming data by dealing with the <code>projectilePartial</code> received from a single HTTP request. </p>
 
             </div>
             
@@ -516,7 +516,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
-              <p>The <code>Cannon._reload</code> is called after processing incoming data. If a reload can be done, then <code>_fetch</code> will be called again with the reloaded URL.    </p>
+              <p>The <code>Gunner._reload</code> is called after processing incoming data. If a reload can be done, then <code>_fetch</code> will be called again with the reloaded URL.    </p>
 
             </div>
             
@@ -549,7 +549,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
-              <p>The <code>Cannon._getField</code> method is the method used to parse and fetch data pased on a <code>projectileStr</code> (or <code>fieldStr</code>). This method takes an array of pools, a field string, and an optional target.</p>
+              <p>The <code>Gunner._getField</code> method is the method used to parse and fetch data pased on a <code>projectileStr</code> (or <code>fieldStr</code>). This method takes an array of pools, a field string, and an optional target.</p>
 
             </div>
             
@@ -600,7 +600,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
-              <p>The <code>Cannon._each</code> is a utility method for looping through arrays or objects. </p>
+              <p>The <code>Gunner._each</code> is a utility method for looping through arrays or objects. </p>
 
             </div>
             
@@ -627,7 +627,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
-              <p>The default <code>Cannon._getterFunc</code> method is used for requesting data via XHR.</p>
+              <p>The default <code>Gunner._getterFunc</code> method is used for requesting data via XHR.</p>
 
             </div>
             
@@ -688,7 +688,7 @@ Cannon may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
-              <p>The <code>Cannon._defer</code> is a minimalist promise implemtation used in <code>Cannon._getURL</code>.</p>
+              <p>The <code>Gunner._defer</code> is a minimalist promise implemtation used in <code>Gunner._getURL</code>.</p>
 
             </div>
             
@@ -741,13 +741,13 @@ Cannon may be freely distributed under the MIT license.
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> isNode, request, qs, root=<span class="hljs-keyword">this</span>;
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> module !== <span class="hljs-string">'undefined'</span> &amp;&amp; module.exports) {
-            <span class="hljs-keyword">if</span> (root) {root.Cannon = Cannon;}
-            module.exports = Cannon;
+            <span class="hljs-keyword">if</span> (root) {root.Gunner = Gunner;}
+            module.exports = Gunner;
             isNode = <span class="hljs-literal">true</span>;
             request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'request'</span>);
             qs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'querystring'</span>);
     } <span class="hljs-keyword">else</span> {
-            root.Cannon = Cannon;
+            root.Gunner = Gunner;
             isNode = <span class="hljs-literal">false</span>;
     }
 }());</pre></div></div>

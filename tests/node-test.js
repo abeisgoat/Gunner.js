@@ -1,4 +1,4 @@
-var Cannon = require('../src/Cannon');
+var Cannon = require('../src/Gunner');
 (new Cannon("http://www.reddit.com/r/Pics/.json"))
     .projectile("data.children.*.data.url")
     .reloader({after: "data.after"})
