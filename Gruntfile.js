@@ -21,9 +21,9 @@ module.exports = function (grunt) {
         },     
             
         uglify: {
-            "Cannon.min.js": {
-                src: "dist/Cannon.js",
-                dest: "dist/Cannon.min.js"
+            "Gunner.min.js": {
+                src: "dist/Gunner.js",
+                dest: "dist/Gunner.min.js"
             }
         },
         
@@ -47,7 +47,7 @@ module.exports = function (grunt) {
             options: {
               enabled: true,
               max_jshint_notifications: 1, // maximum number of notifications from jshint output
-              title: "CannonJS" // defaults to the name in package.json, or will use project directory's name
+              title: "GunnerJS" // defaults to the name in package.json, or will use project directory's name
             }
         }
     });
@@ -64,7 +64,7 @@ module.exports = function (grunt) {
     'jshint:all',
     'clean:all',
     'copy:all',
-    'uglify:Cannon.min.js',
+    'uglify:Gunner.min.js',
     'docco:all'
     ]);   
 };
