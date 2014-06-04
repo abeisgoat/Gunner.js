@@ -19,4 +19,4 @@ For example, load the first 2 pages of pictures on a subreddit:
             console.log(projectile);
         });
 
-For full docs and source-code annotation, see [the documented sources.](http://abeisgreat.github.io/Gunner.js/docs/Cannon.html).
+For full docs and source-code annotation, see [the documented sources](http://abeisgreat.github.io/Gunner.js/docs/Gunner.html).
