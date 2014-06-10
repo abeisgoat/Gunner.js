@@ -48,6 +48,9 @@
 
         // Our projectile data.
         var projectileBlob;
+        
+        // Query data
+        this._queryData = {};
 
         // Exported Methods
         // --------------
@@ -105,6 +108,11 @@
             self._getterFunc = getterFunc;  
             return self;
         };
+        
+        this.query = function (queryData) {
+            self._queryData = queryData;
+            return self;
+        };
 
         // Internal Methods
         // --------------
@@ -118,7 +126,10 @@
                 self.fetcherFunc(self.fetches, self.limitInt);  
             }
 
-            queryData = queryData? queryData: {};
+            var queryData = self._queryData || {};
+            this._each(reloaderData, function (value, obj, key) {
+                queryData[key] = value;
+            }); 
 
             if (self.url) {
                 self._getterFunc(self.url, queryData, callback).then(self._processIncoming);
