@@ -255,9 +255,11 @@ Gunner may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
-              <h2 id="exported-methods">Exported Methods</h2>
+              <p>Query data</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>._queryData = {};</pre></div></div>
             
         </li>
         
@@ -268,7 +270,8 @@ Gunner may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              
+              <h2 id="exported-methods">Exported Methods</h2>
+
             </div>
             
         </li>
@@ -279,6 +282,18 @@ Gunner may be freely distributed under the MIT license.
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>The <code>Gunner.fire</code> method is used to activate the Gunner (i.e. make HTTP requests, parse data, etc). The projectiles are passed to the callback as an array of data shaped by string passed to <code>Gunner.projectile</code>.</p>
 
@@ -291,11 +306,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-19">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>The <code>Gunner.rapidfire</code> is similar to <code>Gunner.fire</code> except that instead of having the callback called once with an array containing the data, it is called once for each protectile in the array.</p>
 
@@ -312,11 +327,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-20">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>The <code>Gunner.reloader</code> method is used for dealing with paginated content. It takes an object of reloader strings like <code>{after: &quot;data.after&quot;}</code> and stores it in the Gunner. After the initial URL provided to the Gunner is loaded, another URL will be loaded which has the added query data <code>?after={{data.after}}</code> with the value for <code>data.after</code> being pulled from the data for the first page. </p>
 
@@ -330,11 +345,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-21">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>The <code>Gunner.limit</code> method is used for limiting the number of HTTP requests when a reloader is used. Theoredically, a reloader could be used to load an infinite amount of pages, which may not be what we want. The <code>limit</code> method takes a number and will not let the total page requests from this Gunner exceed that number.</p>
 
@@ -348,11 +363,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-22">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>The <code>Gunner.fetcher</code> adds a callback to be called as pages are being fetched. The <code>fetcherFunc</code> will be passed the current number of HTTP requests and the limit (if any).</p>
 
@@ -366,11 +381,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-23">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>The <code>Gunner.delay</code> method is used for adding a delay between HTTP requests when a reloader is used. This method takes a number of millseconds and delays each HTTP request by that amount of time.</p>
 
@@ -384,11 +399,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-24">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>The <code>Gunner.projectile</code> method is used for defining the shape of the data passed to <code>Gunner.fire</code>‘s callback. An example <code>projectileStr</code> would be <code>&quot;data.children.*.data.title&quot;</code>. This tells the Gunner to fire the data in <code>dataFromURL[&#39;data&#39;][&#39;children&#39;][*][&#39;data&#39;][&#39;title&#39;]</code>. This syntax should be familiar to any developer with the exception of the special <code>*</code> field. This character is the single most important concept when building a Gunner. It acts as a wild card and allows us to get a list of titles from all the children, not just a specific one.</p>
 
@@ -402,11 +417,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-25">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>The <code>Gunner.recoil</code> method is typically used from within the <code>Gunner.fire</code> callback. This method will take a single projectile and return the parent(s) of that projectile. For example, if we have our projectile set as <code>&quot;data.children.*.data.title&quot;</code>, then our projectile will be the value of <code>title</code>. In order to access the complete child’s data, we can <code>Gunner.recoil</code> the <code>title</code> and we will receive the <code>data</code> object which has the <code>title</code> field. It is important to note that <em>this method returns a list of matches, not a single match</em> due to the fact that there is no guarantee that the projectile provided will be unique.</p>
 
@@ -419,20 +434,12 @@ Gunner may be freely distributed under the MIT license.
         <span class="hljs-keyword">this</span>.getter = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(getterFunc)</span> {</span>
             self._getterFunc = getterFunc;  
             <span class="hljs-keyword">return</span> self;
+        };
+        
+        <span class="hljs-keyword">this</span>.query = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(queryData)</span> {</span>
+            self._queryData = queryData;
+            <span class="hljs-keyword">return</span> self;
         };</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-26">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
-              </div>
-              <h2 id="internal-methods">Internal Methods</h2>
-
-            </div>
             
         </li>
         
@@ -443,7 +450,8 @@ Gunner may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
-              
+              <h2 id="internal-methods">Internal Methods</h2>
+
             </div>
             
         </li>
@@ -455,11 +463,23 @@ Gunner may be freely distributed under the MIT license.
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
               <p>The <code>Gunner._fetch</code> method kicks off loading data for the Gunner.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>._fetch = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback, projectileBlob, queryData)</span> {</span> 
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>._fetch = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback, projectileBlob, reloaderData)</span> {</span> 
             <span class="hljs-keyword">if</span> (self.limitInt &amp;&amp; self.fetches++ == self.limitInt) {
                 callback(projectileBlob, self);
                 <span class="hljs-keyword">return</span>;
@@ -467,7 +487,10 @@ Gunner may be freely distributed under the MIT license.
                 self.fetcherFunc(self.fetches, self.limitInt);  
             }
 
-            queryData = queryData? queryData: {};
+            <span class="hljs-keyword">var</span> queryData = self._queryData || {};
+            <span class="hljs-keyword">this</span>._each(reloaderData, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value, obj, key)</span> {</span>
+                queryData[key] = value;
+            }); 
 
             <span class="hljs-keyword">if</span> (self.url) {
                 self._getterFunc(self.url, queryData, callback).then(self._processIncoming);
@@ -479,11 +502,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-29">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>The <code>Gunner._processIncoming</code> processes incoming data by dealing with the <code>projectilePartial</code> received from a single HTTP request. </p>
 
@@ -510,11 +533,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-30">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>The <code>Gunner._reload</code> is called after processing incoming data. If a reload can be done, then <code>_fetch</code> will be called again with the reloaded URL.    </p>
 
@@ -543,11 +566,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-31">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>The <code>Gunner._getField</code> method is the method used to parse and fetch data pased on a <code>projectileStr</code> (or <code>fieldStr</code>). This method takes an array of pools, a field string, and an optional target.</p>
 
@@ -594,11 +617,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-32">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>The <code>Gunner._each</code> is a utility method for looping through arrays or objects. </p>
 
@@ -621,11 +644,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-33">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>The default <code>Gunner._getterFunc</code> method is used for requesting data via XHR.</p>
 
@@ -660,11 +683,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-34">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>This is why Node is better…</p>
 
@@ -682,11 +705,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-35">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>The <code>Gunner._defer</code> is a minimalist promise implemtation used in <code>Gunner._getURL</code>.</p>
 
@@ -729,11 +752,11 @@ Gunner may be freely distributed under the MIT license.
         </li>
         
         
-        <li id="section-36">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Inspired by <a href="http://stackoverflow.com/a/5197219/1570248">http://stackoverflow.com/a/5197219/1570248</a></p>
 

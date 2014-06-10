@@ -118,7 +118,7 @@
         // --------------
 
         // The `Gunner._fetch` method kicks off loading data for the Gunner.
-        this._fetch = function (callback, projectileBlob, queryData) { 
+        this._fetch = function (callback, projectileBlob, reloaderData) { 
             if (self.limitInt && self.fetches++ == self.limitInt) {
                 callback(projectileBlob, self);
                 return;
