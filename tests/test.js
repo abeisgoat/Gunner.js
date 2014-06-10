@@ -1,5 +1,5 @@
 i = 1;
-(new Cannon("http://www.reddit.com/r/AbandonedPorn/.json")).projectile("data.children.*.data.url").reloader({after: "data.after"}).limit(2).fetcher(function (current, limit) {
+(new Gunner("http://www.reddit.com/r/AbandonedPorn/.json")).projectile("data.children.*.data.url").reloader({after: "data.after"}).limit(2).query({limit: 100}).fetcher(function (current, limit) {
     console.log('Fetching ' + current + ' of ' + limit);
 }).rapidfire(function (projectile, cannon) {
     var pictures = document.getElementById("pictures");

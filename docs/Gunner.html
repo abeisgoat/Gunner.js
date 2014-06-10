@@ -762,7 +762,7 @@ Gunner may be freely distributed under the MIT license.
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> isNode, request, qs, root=<span class="hljs-keyword">this</span>;
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> isNode, request, qs, root=<span class="hljs-keyword">this</span>||window;
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> module !== <span class="hljs-string">'undefined'</span> &amp;&amp; module.exports) {
             <span class="hljs-keyword">if</span> (root) {root.Gunner = Gunner;}
             module.exports = Gunner;

@@ -304,7 +304,7 @@
     };
 
     // Inspired by http://stackoverflow.com/a/5197219/1570248
-    var isNode, request, qs, root=this;
+    var isNode, request, qs, root=this||window;
     if (typeof module !== 'undefined' && module.exports) {
             if (root) {root.Gunner = Gunner;}
             module.exports = Gunner;
